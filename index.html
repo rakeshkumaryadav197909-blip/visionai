@@ -1,310 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VisionAI Pro Max</title>
 
-<meta name="description" content="VisionAI Complete AI SaaS Platform">
+<title>VisionAI - Smart AI Platform</title>
+
+<meta name="description" content="VisionAI Smart AI Chat Platform">
+<meta name="keywords" content="AI chatbot, VisionAI, AI tool">
+
 <meta name="google-site-verification" content="pas4ooNDiCX7RVmnI_K_oU0HatfFwzd_t2dOhLlTRWs" />
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
+text-align:center;
 }
 
 header{
-background:rgba(0,0,0,0.7);
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+padding:20px;
+font-size:30px;
+font-weight:bold;
 }
 
-button{
-padding:7px 14px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-
-.gold{background:gold;}
-.red{background:red;color:white;}
-.orange{background:orange;}
-.green{background:green;color:white;}
-
-.container{padding:20px;}
-
-.card{
-background:rgba(255,255,255,0.08);
+.container{
+width:90%;
+max-width:700px;
+margin:auto;
+margin-top:30px;
+background:#111;
 padding:20px;
 border-radius:10px;
-margin-bottom:20px;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
-
-#chatbox{
-height:250px;
-overflow:auto;
-background:rgba(0,0,0,0.4);
-padding:10px;
-border-radius:8px;
 }
 
 input{
-padding:8px;
+width:90%;
+padding:10px;
+margin:5px;
 border-radius:5px;
 border:none;
-margin:5px 0;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:15px;
+button{
+padding:10px 20px;
+border:none;
+border-radius:6px;
+margin:5px;
+cursor:pointer;
 }
 
-th,td{
-padding:8px;
-border-bottom:1px solid #444;
-text-align:center;
+.chatbox{
+height:300px;
+background:black;
+overflow:auto;
+padding:10px;
+text-align:left;
 }
 
-.stats{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-}
-
-.stat{
-flex:1;
-min-width:150px;
+.admin{
 background:#111;
-padding:15px;
-border-radius:8px;
-text-align:center;
+padding:20px;
+margin-top:30px;
+border-radius:10px;
 }
 
-#adminPanel{display:none;}
-#adminLoginBox{display:none;}
+footer{
+margin-top:50px;
+padding:20px;
+background:#000;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h2>🚀 VisionAI Pro Max</h2>
-<div>
-<button class="green" onclick="showAdminLogin()">Admin</button>
-<button class="red" onclick="logout()">Logout</button>
-</div>
+🚀 VisionAI
 </header>
+
 
 <div class="container">
 
-<!-- USER DASHBOARD -->
-<div class="card">
-<h3>User Dashboard</h3>
-<p><b>Name:</b> <span id="name">Loading...</span></p>
-<p><b>Email:</b> <span id="email">Loading...</span></p>
-<p><b>Role:</b> <span id="role">Free</span></p>
-<p><b>Premium Expiry:</b> <span id="expiry">N/A</span></p>
-</div>
+<h2>Login / Signup</h2>
 
-<!-- CHAT -->
-<div class="card">
-<h3>AI Chat</h3>
-<div id="chatbox"></div>
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password">
+
 <br>
-<input type="text" id="msg" placeholder="Type message">
-<button class="gold" onclick="sendMessage()">Send</button>
-</div>
 
-<!-- PREMIUM -->
-<div class="card">
-<h3>Premium ₹499 - 3 Months</h3>
-<p>UPI: 9631535323@upi</p>
-<p>Pay & contact admin.</p>
-</div>
+<button onclick="signup()">Signup</button>
+<button onclick="login()">Login</button>
 
-<!-- ADMIN LOGIN -->
-<div class="card" id="adminLoginBox">
-<h3>Admin Login</h3>
-<input type="password" id="adminPass" placeholder="Enter Admin Password">
-<br>
-<button class="green" onclick="adminLogin()">Login</button>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="card" id="adminPanel">
-<h3>⚙️ Admin Panel</h3>
-
-<div class="stats">
-<div class="stat">
-<h2 id="total">0</h2>
-<p>Total Users</p>
-</div>
-<div class="stat">
-<h2 id="free">0</h2>
-<p>Free Users</p>
-</div>
-<div class="stat">
-<h2 id="premium">0</h2>
-<p>Premium Users</p>
-</div>
-</div>
-
-<input type="text" id="search" placeholder="Search Email..." onkeyup="searchUser()">
-
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Role</th>
-<th>Expiry</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="users"></tbody>
-</table>
-</div>
+<p id="loginStatus"></p>
 
 </div>
+
+
+
+<div class="container">
+
+<h2>AI Chat</h2>
+
+<div class="chatbox" id="chatbox"></div>
+
+<input id="message" placeholder="Ask VisionAI">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+
+
+<div class="container">
+
+<h2>User Dashboard</h2>
+
+<p>Status: <span id="status">Free</span></p>
+
+<p>Daily Limit: <span id="limit">5</span></p>
+
+<p>Total Messages: <span id="total">0</span></p>
+
+<button onclick="buyPremium()">Activate Premium</button>
+
+</div>
+
+
+
+<div class="admin">
+
+<h2>Admin Panel</h2>
+
+<button onclick="showUsers()">Show Users</button>
+<button onclick="reset()">Reset Database</button>
+
+<div id="users"></div>
+
+</div>
+
+
+
+<footer>
+
+VisionAI Platform  
+Owner: **Rakesh Kumar**  
+Developer Support: **Shubham Kumar Yadav**
+
+</footer>
+
 
 <script>
 
-let userId = localStorage.getItem("userId");
-let ADMIN_PASSWORD = "vision123";  // change this
+let users = JSON.parse(localStorage.getItem("users")) || []
 
-if(!userId){
-alert("Login First");
-window.location.href="/login.html";
+let loggedUser = null
+
+let limit = 5
+let total = 0
+
+function signup(){
+
+let u = document.getElementById("username").value
+let p = document.getElementById("password").value
+
+users.push({user:u,pass:p,premium:false})
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Signup successful")
+
 }
 
-async function loadUser(){
-const res = await fetch("/get-user",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({userId})
-});
-const data = await res.json();
+function login(){
 
-document.getElementById("name").innerText=data.name;
-document.getElementById("email").innerText=data.email;
-document.getElementById("role").innerText=data.role;
-if(data.premiumExpiry)
-document.getElementById("expiry").innerText=new Date(data.premiumExpiry).toDateString();
+let u = document.getElementById("username").value
+let p = document.getElementById("password").value
+
+let found = users.find(x=>x.user==u && x.pass==p)
+
+if(found){
+
+loggedUser = found
+
+document.getElementById("loginStatus").innerText="Login Success"
+
+if(found.premium){
+
+limit=999
+document.getElementById("status").innerText="Premium"
+
 }
 
-async function sendMessage(){
-const msg=document.getElementById("msg").value;
-
-const res=await fetch("/chat",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:msg,userId})
-});
-const data=await res.json();
-
-document.getElementById("chatbox").innerHTML+=
-"<p><b>You:</b> "+msg+"</p>"+
-"<p><b>AI:</b> "+data.reply+"</p>";
-
-document.getElementById("msg").value="";
-}
-
-function showAdminLogin(){
-document.getElementById("adminLoginBox").style.display="block";
-}
-
-function adminLogin(){
-const pass=document.getElementById("adminPass").value;
-if(pass===ADMIN_PASSWORD){
-document.getElementById("adminPanel").style.display="block";
-loadUsers();
-alert("Admin Access Granted");
 }else{
-alert("Wrong Password");
-}
-}
 
-async function loadUsers(){
-const res=await fetch("/admin/users");
-const users=await res.json();
-window.allUsers=users;
+alert("Login failed")
 
-document.getElementById("total").innerText=users.length;
-document.getElementById("free").innerText=users.filter(u=>u.role==="free").length;
-document.getElementById("premium").innerText=users.filter(u=>u.role==="premium").length;
-
-render(users);
 }
 
-function render(users){
-let html="";
-users.forEach(u=>{
-html+=`
-<tr>
-<td>${u.name}</td>
-<td>${u.email}</td>
-<td>${u.role}</td>
-<td>${u.premiumExpiry?new Date(u.premiumExpiry).toDateString():"N/A"}</td>
-<td>
-<button class="gold" onclick="activate('${u._id}')">Activate</button>
-<button class="orange" onclick="removeP('${u._id}')">Remove</button>
-<button class="red" onclick="del('${u._id}')">Delete</button>
-</td>
-</tr>
-`;
-});
-document.getElementById("users").innerHTML=html;
 }
 
-function searchUser(){
-const val=document.getElementById("search").value.toLowerCase();
-const filtered=allUsers.filter(u=>u.email.toLowerCase().includes(val));
-render(filtered);
+
+
+function send(){
+
+if(limit<=0){
+
+alert("Daily limit finished")
+
+return
+
 }
 
-async function activate(id){
-await fetch("/activate-premium",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({userId:id})
-});
-loadUsers();
+let msg = document.getElementById("message").value
+
+let chat = document.getElementById("chatbox")
+
+chat.innerHTML += "<p><b>You:</b> "+msg+"</p>"
+
+let reply = "VisionAI: This is demo AI response."
+
+chat.innerHTML += "<p>"+reply+"</p>"
+
+limit--
+total++
+
+document.getElementById("limit").innerText=limit
+document.getElementById("total").innerText=total
+
 }
 
-async function removeP(id){
-await fetch("/admin/remove-premium",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({userId:id})
-});
-loadUsers();
+
+
+function buyPremium(){
+
+if(!loggedUser){
+
+alert("Login first")
+
+return
+
 }
 
-async function del(id){
-if(confirm("Delete user?")){
-await fetch("/admin/delete",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({userId:id})
-});
-loadUsers();
-}
+loggedUser.premium=true
+
+limit=999
+
+document.getElementById("status").innerText="Premium"
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Premium Activated")
+
 }
 
-function logout(){
-localStorage.clear();
-window.location.href="/login.html";
+
+
+function showUsers(){
+
+document.getElementById("users").innerText=JSON.stringify(users,null,2)
+
 }
 
-loadUser();
+
+
+function reset(){
+
+localStorage.clear()
+
+alert("Database cleared")
+
+location.reload()
+
+}
 
 </script>
 
